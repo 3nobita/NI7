@@ -122,9 +122,10 @@
             .navbar-header {
                 width: 100%;
                 display: flex;
-                align-items: center;
                 justify-content: space-between;
-                flex-direction: row-reverse;
+            }
+            .navbar {
+                padding: 0.5rem 15px; /* Reduce padding on smaller screens */
             }
         }
 
@@ -134,6 +135,17 @@
             display: none;
             outline: none;
         }
+        .navbar {
+            display: flex;
+            flex-direction: column; /* Stack items vertically on small screens */
+        }
+        
+        @media (min-width: 768px) {
+            .navbar {
+                flex-direction: row; /* Switch back to row on larger screens */
+            }
+        }
+        
 
         @media (max-width: 768px) {
             .navbar-toggler {
@@ -161,15 +173,15 @@
         /* Start navbar menu */
         .navbar-menu {
             display: flex;
-            align-items: center;
             flex-basis: auto;
             flex-grow: 1;
         }
 
         @media (max-width: 768px) {
             .navbar-menu {
-                display: none;
-                text-align: center;
+                display: none; /* Hide menu initially */
+                flex-direction: column; /* Stack vertically when visible */
+                width: 100%; 
             }
         }
 
@@ -308,6 +320,13 @@
             background-color: #1e5d3f;
             /* Darker shade for hover effect */
         }
+        .navbar-header img {
+            max-height: 50px; /* Ensure the logo does not exceed this height */
+            width: auto;      /* Maintain aspect ratio */
+            margin-left: 0;   /* Reset left positioning */
+            margin-right: auto; /* Center it horizontally */
+        }
+        
     </style>
 </head>
 
@@ -322,8 +341,11 @@
                     <span></span>
                 </button>
                 <a href="/">
-                    <h4 style="font-size: 40px; position: relative;left: -5em; ">NlRealty<span></span></h4>
+                    <img style="height:50px;width:auto; "
+                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8r9QMkmfWOjL7_4JAs8Mw3s55r7f-9n71S9te2G4GEDmG5o0f9TsjHfs99BNhWxSrQqsA02AGhgACB2MrjmVtack_gBB_ozz-52tdg5FFYrVwpF4t97Jm3vYbQEM0toKbxKB6rcKZf3mx7_Cw_ReNQJuFBWQaKXMc5FQaI7EGZatIVrYHJgIwJ48KE60/s7768/file%20%287%29.png"
+                        alt="">
                 </a>
+
             </div>
 
             <div class="navbar-menu" id="open-navbar1">
@@ -333,29 +355,23 @@
                     <li><a href="/developer/66f6412ae6e171ec56830d46">Our Projects</a></li>
                     <li><a href="/career">Careers</a></li>
                     <li><a href="/trending">Blog</a></li>
+                    <li>
+
+                        <a class="login-button" href="/admin">Login</a>
+                    </li>
                     <li></li>
                 </ul>
             </div>
-            <a class="login-button" href="/admin">Login</a>
 
         </div>
     </nav>
 
 
     <script>
-        // Other important pens.
-        // Map: https://codepen.io/themustafaomar/pen/ZEGJeZq
-        // Dashboard: https://codepen.io/themustafaomar/pen/jLMPKm
-
         let dropdowns = document.querySelectorAll('.navbar .dropdown-toggler')
         let dropdownIsOpen = false
 
-        // Handle dropdown menues
         if (dropdowns.length) {
-            // Usually I don't recommend doing this (adding many event listeners to elements have the same handler)
-            // Instead use event delegation: https://javascript.info/event-delegation
-            // Why: https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js
-            // But since we only have two dropdowns, no problem with that. 
             dropdowns.forEach((dropdown) => {
                 dropdown.addEventListener('click', (event) => {
                     let target = document.querySelector(`#${event.target.dataset.dropdown}`)
